@@ -655,3 +655,19 @@ except:
     pass
 
 bot.infinity_polling()
+# ========== إضافة خادم صحي لـ Render ==========
+from flask import Flask
+import threading
+
+health_app = Flask(__name__)
+
+@health_app.route('/')
+def health_check():
+    return "Bot is alive!", 200
+
+def run_health_server():
+    health_app.run(host='0.0.0.0', port=10000)
+
+threading.Thread(target=run_health_server, daemon=True).start()
+print("✅ Health check server started on port 10000")
+# ================================================
